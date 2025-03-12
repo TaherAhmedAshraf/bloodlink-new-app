@@ -21,6 +21,25 @@ export type RootStackParamList = {
   Main: undefined;
   Register: undefined;
   RequestDetail: { request: BloodRequest };
+  ChatHistory: undefined;
+  CreateRequestStep1: undefined;
+  CreateRequestStep2: undefined;
+  CreateRequestStep3: undefined;
+  BloodBankDetail: { 
+    bloodBank: {
+      id: string;
+      name: string;
+      location: string;
+      distance: string;
+      hours?: string;
+      bloodNeeded?: string;
+    } 
+  };
+  Notification: undefined;
+  AccountSettings: undefined;
+  EditProfile: undefined;
+  DonationUpdate: undefined;
+  History: undefined;
 };
 
 export type TabParamList = {

@@ -183,7 +183,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.headerRight}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            const rootNavigation = navigation.getParent();
+            if (rootNavigation) {
+              rootNavigation.navigate('Notification');
+            }
+          }}>
             <Icon name="bell-outline" size={24} color={colors.text} />
           </TouchableOpacity>
         </View>

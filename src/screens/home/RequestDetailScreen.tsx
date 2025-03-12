@@ -35,6 +35,32 @@ const RequestDetailScreen: React.FC<RequestDetailScreenProps> = ({
 }) => {
   const { request } = route.params;
 
+  // Mock data for the example
+  const requestData = {
+    bloodType: 'A+',
+    hospital: 'Lab Aid Hospital',
+    location: 'Dhaka',
+    hemoglobinPoint: 'N/A',
+    patientProblem: 'Uterine tumor',
+    bagNeeded: '2 Bag',
+    zone: 'Kolabagan, Dhaka',
+    date: '07/02/2025',
+    time: '11:00 AM',
+    additionalInfo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo conseq',
+    viewCount: 10,
+    ...request
+  };
+
+  const handleAccept = () => {
+    // Handle accept request logic
+    console.log('Request accepted');
+  };
+
+  const handleCall = () => {
+    // Handle call logic
+    console.log('Calling requester');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={colors.background} barStyle="dark-content" />
@@ -44,102 +70,73 @@ const RequestDetailScreen: React.FC<RequestDetailScreenProps> = ({
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Icon name="arrow-left" size={24} color={colors.text} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Blood Request Details</Text>
+        <Text style={styles.headerTitle}>{requestData.bloodType} Blood Needed</Text>
         <View style={styles.headerRight} />
       </View>
 
       <ScrollView style={styles.scrollView}>
-        {/* Hospital Info */}
-        <View style={styles.section}>
-          <View style={styles.hospitalHeader}>
-            <View style={[styles.bloodTypeContainer, { backgroundColor: getBloodTypeColor(request.bloodType) }]}>
-              <Text style={styles.bloodType}>{request.bloodType}</Text>
-            </View>
-            <View style={styles.hospitalInfo}>
-              <Text style={styles.hospitalName}>{request.hospital}</Text>
-              <Text style={styles.location}>{request.location}</Text>
-            </View>
-          </View>
-          
-          <View style={styles.detailRow}>
-            <Icon name="calendar" size={18} color={colors.textLight} />
-            <Text style={styles.detailText}>{request.date}</Text>
-          </View>
-          
-          <View style={styles.detailRow}>
-            <Icon name="clock-outline" size={18} color={colors.textLight} />
-            <Text style={styles.detailText}>{request.time}</Text>
-          </View>
-          
-          <View style={styles.detailRow}>
-            <Icon name="account" size={18} color={colors.textLight} />
-            <Text style={styles.detailText}>Patient: John Doe</Text>
-          </View>
-          
-          <View style={styles.detailRow}>
-            <Icon name="phone" size={18} color={colors.textLight} />
-            <Text style={styles.detailText}>Contact: +880 1712345678</Text>
-          </View>
-        </View>
-
-        {/* Additional Info */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Additional Information</Text>
-          <Text style={styles.description}>
-            Urgent blood needed for surgery. The patient is scheduled for surgery tomorrow morning.
-            Please contact as soon as possible if you can donate.
+        {/* Viewers Info */}
+        <View style={styles.viewersContainer}>
+          <Icon name="information-outline" size={20} color={colors.info} />
+          <Text style={styles.viewersText}>
+            This request is seeing by {requestData.viewCount} More People
           </Text>
         </View>
 
-        {/* Donor Requirements */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Donor Requirements</Text>
-          <View style={styles.requirementItem}>
-            <Icon name="check-circle" size={18} color={colors.success} />
-            <Text style={styles.requirementText}>Age between 18-60 years</Text>
+        {/* Blood Type and Hospital Info */}
+        <View style={styles.bloodInfoContainer}>
+          <View style={styles.bloodTypeCircle}>
+            <Text style={styles.bloodTypeText}>{requestData.bloodType}</Text>
           </View>
-          <View style={styles.requirementItem}>
-            <Icon name="check-circle" size={18} color={colors.success} />
-            <Text style={styles.requirementText}>Weight more than 50kg</Text>
-          </View>
-          <View style={styles.requirementItem}>
-            <Icon name="check-circle" size={18} color={colors.success} />
-            <Text style={styles.requirementText}>No major illness in last 6 months</Text>
-          </View>
-          <View style={styles.requirementItem}>
-            <Icon name="check-circle" size={18} color={colors.success} />
-            <Text style={styles.requirementText}>No tattoo in last 12 months</Text>
+          <View style={styles.hospitalContainer}>
+            <Text style={styles.bloodTypeTitle}>{requestData.bloodType} Blood Needed</Text>
+            <Text style={styles.hospitalName}>{requestData.hospital}, {requestData.location}</Text>
           </View>
         </View>
-      </ScrollView>
 
-      {/* Action Buttons */}
+        {/* Request Details */}
+        <View style={styles.detailsContainer}>
+          <DetailRow label="Hemoglobin Point:" value={requestData.hemoglobinPoint} valueColor={colors.error} />
+          <DetailRow label="Patient Problem:" value={requestData.patientProblem} valueColor={colors.error} />
+          <DetailRow label="Bag Needed:" value={requestData.bagNeeded} valueColor={colors.primary}/>
+          <DetailRow label="Zone:" value={requestData.zone} valueColor={colors.primary}/>
+          <DetailRow label="Date:" value={requestData.date} valueColor={colors.primary}/>
+          <DetailRow label="Time:" value={requestData.time} valueColor={colors.primary}/>
+          
+          <View style={styles.additionalInfoContainer}>
+            <Text style={styles.additionalInfoLabel}>Anything Specific:</Text>
+            <Text style={styles.additionalInfoText}>{requestData.additionalInfo}</Text>
+          </View>
+        </View>
+              {/* Action Buttons */}
       <View style={styles.actionContainer}>
-        <TouchableOpacity style={styles.callButton}>
-          <Icon name="phone" size={20} color={colors.secondary} />
-          <Text style={styles.buttonText}>Call</Text>
+        <TouchableOpacity style={styles.acceptButton} onPress={handleAccept}>
+          <Text style={styles.buttonText}>Accept Request</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.donateButton}>
-          <Icon name="hand-heart" size={20} color={colors.secondary} />
-          <Text style={styles.buttonText}>Donate</Text>
+        <TouchableOpacity style={styles.callButton} onPress={handleCall}>
+          <Text style={styles.callButtonText}>Call</Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
-const getBloodTypeColor = (bloodType: string) => {
-  switch (bloodType) {
-    case 'A+':
-      return '#FFEBEE';
-    case 'AB+':
-      return '#E8F5E9';
-    case 'O-':
-      return '#FFF8E1';
-    default:
-      return '#E3F2FD';
-  }
-};
+// Helper component for detail rows
+const DetailRow = ({ 
+  label, 
+  value, 
+  valueColor = colors.text 
+}: { 
+  label: string; 
+  value: string; 
+  valueColor?: string;
+}) => (
+  <View style={styles.detailRow}>
+    <Text style={styles.detailLabel}>{label}</Text>
+    <Text style={[styles.detailValue, { color: valueColor }]}>{value}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -170,102 +167,116 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  section: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  hospitalHeader: {
+  viewersContainer: {
     flexDirection: 'row',
-    marginBottom: 16,
+    alignItems: 'center',
+    backgroundColor: '#E3F2FD',
+    padding: 12,
+    marginHorizontal: 16,
+    marginTop: 16,
+    borderRadius: 8,
   },
-  bloodTypeContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+  viewersText: {
+    marginLeft: 8,
+    color: colors.info,
+    fontSize: 14,
+  },
+  bloodInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginTop: 20,
+  },
+  bloodTypeCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#FFEBEE',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  bloodType: {
-    fontSize: 16,
+  bloodTypeText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  hospitalContainer: {
+    marginLeft: 16,
+  },
+  bloodTypeTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
     color: colors.text,
-  },
-  hospitalInfo: {
-    marginLeft: 12,
-    flex: 1,
+    marginBottom: 4,
   },
   hospitalName: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.text,
-  },
-  location: {
     fontSize: 14,
     color: colors.textLight,
-    marginTop: 4,
+  },
+  detailsContainer: {
+    marginHorizontal: 16,
+    marginTop: 24,
   },
   detailRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 16,
   },
-  detailText: {
-    fontSize: 14,
-    color: colors.text,
-    marginLeft: 8,
-  },
-  sectionTitle: {
+  detailLabel: {
+    width: 140,
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
     color: colors.text,
-    marginBottom: 12,
   },
-  description: {
-    fontSize: 14,
+  detailValue: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  additionalInfoContainer: {
+    marginTop: 8,
+  },
+  additionalInfoLabel: {
+    fontSize: 16,
+    fontWeight: '500',
     color: colors.text,
-    lineHeight: 20,
-  },
-  requirementItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 8,
   },
-  requirementText: {
+  additionalInfoText: {
     fontSize: 14,
+    lineHeight: 20,
     color: colors.text,
-    marginLeft: 8,
   },
   actionContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
+    gap: 10,
+  },
+  acceptButton: {
+    flex: 2,
+    backgroundColor: '#00695C',
+    paddingVertical: 16,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   callButton: {
     flex: 1,
-    flexDirection: 'row',
-    backgroundColor: colors.info,
-    paddingVertical: 12,
-    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    paddingVertical: 16,
+    borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 8,
-  },
-  donateButton: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: colors.primary,
-    paddingVertical: 12,
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 8,
   },
   buttonText: {
     color: colors.secondary,
     fontWeight: '600',
-    marginLeft: 8,
+    fontSize: 16,
+  },
+  callButtonText: {
+    color: colors.primary,
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
 

@@ -19,6 +19,13 @@ import LoginScreen from './src/screens/auth/LoginScreen';
 import OTPScreen from './src/screens/auth/OTPScreen';
 import TabNavigator from './src/navigation/TabNavigator';
 import RequestDetailScreen from './src/screens/home/RequestDetailScreen';
+import ChatHistoryScreen from './src/screens/home/ChatHistoryScreen';
+import BloodBankDetailScreen from './src/screens/home/bloodbank/BloodBankDetailScreen';
+import NotificationScreen from './src/screens/home/NotificationScreen';
+import AccountSettingsScreen from './src/screens/profile/AccountSettingsScreen';
+import EditProfileScreen from './src/screens/profile/EditProfileScreen';
+import DonationUpdateScreen from './src/screens/profile/DonationUpdateScreen';
+import HistoryScreen from './src/screens/profile/HistoryScreen';
 
 // Create stack navigator
 const Stack = createStackNavigator<RootStackParamList>();
@@ -38,6 +45,13 @@ function App(): React.JSX.Element {
           <Stack.Screen name="OTPScreen" component={OTPScreen} />
           <Stack.Screen name="Main" component={TabNavigator} />
           <Stack.Screen name="RequestDetail" component={RequestDetailScreen} />
+          <Stack.Screen name="ChatHistory" component={ChatHistoryScreen} />
+          <Stack.Screen name="BloodBankDetail" component={BloodBankDetailScreen} />
+          <Stack.Screen name="Notification" component={NotificationScreen} />
+          <Stack.Screen name="AccountSettings" component={AccountSettingsScreen} />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+          <Stack.Screen name="DonationUpdate" component={DonationUpdateScreen} />
+          <Stack.Screen name="History" component={HistoryScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
